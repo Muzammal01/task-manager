@@ -43,12 +43,8 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request, $id)
     {
         $task = Auth::user()->tasks()->findOrFail($id);
-        $request->validated($request->only(['title', 'description', 'status']));
-        $task->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'status' => $request->status,
-        ]);
+        $data = $request->validated();
+        $task->update($data);
         return response()->json($task);
     }
 
