@@ -11,21 +11,19 @@ use App\Http\Requests\UpdateUserRequest;
 
 class UserController extends Controller
 {
-    // List all users
     public function index()
     {
         $users = User::with('role')->get();
         return response()->json(['users' => $users], 200);
     }
 
-    // Show a specific user
     public function show($id)
     {
         $user = User::with('role')->findOrFail($id);
         return response()->json(['user' => $user], 200);
     }
 
-    // Create a new user
+    // use custom StoreUserRequest for validation the data
     public function store(StoreUserRequest $request)
     {
         $data = $request->validated();
@@ -39,7 +37,6 @@ class UserController extends Controller
         return response()->json(['user' => $user], 201);
     }
 
-    // Update an existing user
     public function update(UpdateUserRequest $request, $id)
     {
         $user = User::findOrFail($id);
@@ -49,7 +46,6 @@ class UserController extends Controller
         return response()->json(['user' => $user], 200);
     }
 
-    // Delete a user
     public function destroy($id)
     {
         $user = User::findOrFail($id);
